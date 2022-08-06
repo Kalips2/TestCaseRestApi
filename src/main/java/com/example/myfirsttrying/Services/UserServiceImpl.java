@@ -4,8 +4,10 @@ import com.example.myfirsttrying.DTO.ProductDTO;
 import com.example.myfirsttrying.DTO.UserDTO;
 import com.example.myfirsttrying.Models.Product;
 import com.example.myfirsttrying.Models.User;
+import com.example.myfirsttrying.Models.UsersProducts;
 import com.example.myfirsttrying.Repositories.ProductRepository;
 import com.example.myfirsttrying.Repositories.UserRepository;
+import com.example.myfirsttrying.Repositories.UsersProductsRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Modifying;
@@ -27,6 +29,8 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private UsersProductsRepository usersProductsRepository;
 
     @Override
     public List<User> getAllUsers() {
@@ -52,7 +56,7 @@ public class UserServiceImpl implements UserService {
             );
         } else {
             userRepository.ChangeMoney(user_id, money - cost);
-
+            usersProductsRepository.save(new UsersProducts(user_id, item_id));
         }
     }
 
