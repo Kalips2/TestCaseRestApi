@@ -1,5 +1,6 @@
 package com.example.myfirsttrying.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -23,6 +24,7 @@ public class Product {
     }
 
     //ManyToMany
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
             name="users_products",

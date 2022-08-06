@@ -15,9 +15,12 @@ public interface UserService {
     List<User> getAllUsers();
     List<Product> getAllProducts();
     void ImplPurchase(int user_id, int item_id) throws Exception;
-    List<User> getUserByProduct();
-    List<Product> getProductByUser();
+    List<User> getUserByProduct(int id);
+    List<Product> getProductByUser(int id);
     void addUser(UserDTO user);
     void addProduction(ProductDTO item);
+
+    void deleteUser(int id);
+    void deleteProduct(int id);
 
 }

@@ -34,12 +34,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getAllUsers() {
-        return (List<User>) userRepository.findAll();
+        return userRepository.findAll();
     }
 
     @Override
     public List<Product> getAllProducts() {
-        return (List<Product>) productRepository.findAll();
+        return productRepository.findAll();
     }
 
     @Override
@@ -61,13 +61,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getUserByProduct() {
-        return null;
+    public List<User> getUserByProduct(int id) {
+        return usersProductsRepository.getUserByProduct(id);
     }
 
     @Override
-    public List<Product> getProductByUser() {
-        return null;
+    public List<Product> getProductByUser(int id) {
+        return usersProductsRepository.getProductByUser(id);
     }
 
     @Override
@@ -78,5 +78,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public void addProduction(ProductDTO item) {
         productRepository.save(new Product(item.getName(), item.getPrice()));
+    }
+
+    @Override
+    public void deleteUser(int id) {
+        userRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteProduct(int id) {
+        productRepository.deleteById(id);
     }
 }

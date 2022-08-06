@@ -1,5 +1,6 @@
 package com.example.myfirsttrying.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -9,7 +10,6 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "users")
-//@Access(value=AccessType.FIELD)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,6 +22,7 @@ public class User {
     private int amount_money;
 
     //ManyToMany
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
             name="users_products",
