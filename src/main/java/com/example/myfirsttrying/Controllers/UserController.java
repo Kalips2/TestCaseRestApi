@@ -37,7 +37,11 @@ public class UserController {
     }
     @GetMapping("/buy")
     public ResponseEntity ImpPurchase(@RequestParam int user_id, @RequestParam int item_id) {
-        service.ImplPurchase(user_id, item_id);
+        try {
+            service.ImplPurchase(user_id, item_id);
+        } catch (Exception e) {
+            return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity(HttpStatus.OK);
     }
 

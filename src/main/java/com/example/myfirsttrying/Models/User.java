@@ -37,4 +37,14 @@ public class User {
         this.amount_money = amount_money;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", first_name='" + first_name + '\'' +
+                ", last_name='" + last_name + '\'' +
+                ", amount_money=" + amount_money +
+                ", products=" + products +
+                '}';
+    }
 }

@@ -6,12 +6,22 @@ import com.example.myfirsttrying.Models.Product;
 import com.example.myfirsttrying.Models.User;
 import com.example.myfirsttrying.Repositories.ProductRepository;
 import com.example.myfirsttrying.Repositories.UserRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+
 @Service
-public class UserServiceImpl implements UserService{
+@Transactional //Чтобы мы могли выполнять запросы (query)
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
@@ -29,9 +39,21 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void ImplPurchase(int user_id, int item_id) {
+    public void ImplPurchase(int user_id, int item_id) throws Exception {
         User user = userRepository.getReferenceById(user_id);
+        Product item = productRepository.getReferenceById(item_id);
+        //System.out.println(user);
+        //System.out.println(item);
+        int money = user.getAmount_money();
+        int cost = item.getPrice();
+        if (money < cost) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "You can't afford this product! Choose another one!"
+            );
+        } else {
+            userRepository.ChangeMoney(user_id, money - cost);
 
+        }
     }
 
     @Override
